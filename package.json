@@ -2,7 +2,7 @@
   "name": "backend-seed",
   "version": "1.0.0",
   "description": "Seed project to build back-end services that scale",
-  "main": "src/app.ts",
+  "main": "src/app.js",
   "scripts": {
     "start": "tsc && node ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 0"

@@ -10,7 +10,7 @@ import {
 import SERVICE_IDENTIFIERS from '../config/inversify/serviceIdentifiers';
 import UserService from '../services/userService';
 
-@controller('/user')
+@controller('/user', SERVICE_IDENTIFIERS.HttpLoggerMiddleware)
 export default class UserController extends BaseHttpController {
   constructor(@inject(SERVICE_IDENTIFIERS.UserService) private readonly userService: UserService) {
     super();
