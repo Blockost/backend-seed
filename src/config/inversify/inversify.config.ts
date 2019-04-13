@@ -5,6 +5,8 @@ import UserServiceImpl from '../../services/impl/userServiceImpl';
 import UserService from '../../services/userService';
 import HttpLoggerMiddlewareImpl from '../../middlewares/impl/httpLoggerMiddlewareImpl';
 import HttpLoggerMiddleware from '../../middlewares/httpLoggerMiddleware';
+import LoggerServiceImpl from '../../services/impl/loggerServiceImpl';
+import LoggerService from '../../services/loggerService';
 
 /**
  * Class that holds the configuration of the Inversify container.
@@ -31,6 +33,7 @@ export default class InversifyConfig {
     this.container
       .bind<HttpLoggerMiddleware>(SERVICE_IDENTIFIERS.HttpLoggerMiddleware)
       .to(HttpLoggerMiddlewareImpl);
+    this.container.bind<LoggerService>(SERVICE_IDENTIFIERS.LoggerService).to(LoggerServiceImpl);
   }
 
   /**
