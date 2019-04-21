@@ -7,6 +7,7 @@ import HttpLoggerMiddlewareImpl from '../../middlewares/impl/httpLoggerMiddlewar
 import HttpLoggerMiddleware from '../../middlewares/httpLoggerMiddleware';
 import LoggerServiceImpl from '../../services/impl/loggerServiceImpl';
 import LoggerService from '../../services/loggerService';
+import ConfigService from '../configService';
 
 /**
  * Class that holds the configuration of the Inversify container.
@@ -34,13 +35,16 @@ export default class InversifyConfig {
       .bind<HttpLoggerMiddleware>(SERVICE_IDENTIFIERS.HttpLoggerMiddleware)
       .to(HttpLoggerMiddlewareImpl);
     this.container.bind<LoggerService>(SERVICE_IDENTIFIERS.LoggerService).to(LoggerServiceImpl);
+    this.container.bind(ConfigService).toSelf();
   }
 
   /**
    * Defines binding between abstraction to concrete classes that need to be
    * aynchronously instantiated.
    */
-  bindAsync(): Promise<void> {
+  async bindAsync(): Promise<void> {
+    const ormConfig = this.container.get(ConfigService).getOrmConfig();
+    console.log(ormConfig);
     return Promise.resolve();
   }
 }
