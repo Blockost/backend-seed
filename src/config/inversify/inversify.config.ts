@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { Container } from 'inversify';
+import { createConnection, Connection } from 'typeorm';
 import SERVICE_IDENTIFIERS from './serviceIdentifiers';
 import UserServiceImpl from '../../services/impl/userServiceImpl';
 import UserService from '../../services/userService';
@@ -42,9 +43,22 @@ export default class InversifyConfig {
    * Defines binding between abstraction to concrete classes that need to be
    * aynchronously instantiated.
    */
-  async bindAsync(): Promise<void> {
+  async bindAsync(): Promise<any> {
     const ormConfig = this.container.get(ConfigService).getOrmConfig();
-    console.log(ormConfig);
-    return Promise.resolve();
+    const typeormConection = createConnection({ type: 'postgres', ...ormConfig });
+
+    try {
+      // Await for all the promise
+      const values: any[] = await Promise.all([typeormConection]);
+
+      // Bind typeorm connection  
+      this.container
+        .bind<Connection>(SERVICE_IDENTIFIERS.DatabaseConnection)
+        .toConstantValue(values[0]);
+
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject(error);
+    }
   }
 }
