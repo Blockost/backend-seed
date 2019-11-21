@@ -18,7 +18,7 @@ export default class UserController extends BaseHttpController {
 
   @httpGet('/:id')
   private async getUser(@request() req: express.Request, @response() res: express.Response) {
-    const id = req.params.id;
+    const id = parseInt(req.params.id);
 
     try {
       const user = await this.userService.findById(id);
