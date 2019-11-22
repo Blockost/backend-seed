@@ -8,10 +8,17 @@ import './controllers/userController';
 
 const PORT = 3000;
 const inversionOfControlContainer = new InversifyConfig();
+
+//
 inversionOfControlContainer.bind();
-inversionOfControlContainer
-  .bindAsync()
-  .then(() => {
+
+// XXX: 2019-11-22 Blockost Using an IIAFE (Immediately Invoked Async Function Expression) here because
+// await is only usable inside an async function.
+// The good news is top-level await should be coming soon: https://github.com/tc39/proposal-top-level-await
+(async () => {
+  try {
+    await inversionOfControlContainer.bindAsync();
+
     // When asynchronous bindings are done, start the application with the finalized container
     const server = new InversifyExpressServer(inversionOfControlContainer.getContainer());
     server.setConfig((app) => {
@@ -23,9 +30,9 @@ inversionOfControlContainer
     // Build and start Express server
     const inversifyExpressApp = server.build();
     inversifyExpressApp.listen(PORT, () => console.log(`Listening in port ${PORT}`));
-  })
-  .catch((error) => {
+  } catch (error) {
     // XXX 2019-03-15 Blockost Logging to console because bindings failed so we don't
     // have access to LoggerService here
     console.error(`Cannot start application. Reason: ${error}`);
-  });
+  }
+})();

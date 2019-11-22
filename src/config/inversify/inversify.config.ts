@@ -28,7 +28,7 @@ export default class InversifyConfig {
   }
 
   /**
-   * Defines binding between abstraction to concrete classes.
+   * Defines binding between abstraction and concrete classes.
    */
   bind() {
     this.container.bind<UserService>(SERVICE_IDENTIFIERS.UserService).to(UserServiceImpl);
@@ -40,7 +40,7 @@ export default class InversifyConfig {
   }
 
   /**
-   * Defines binding between abstraction to concrete classes that need to be
+   * Defines binding between abstraction and concrete classes that need to be
    * aynchronously instantiated.
    */
   async bindAsync(): Promise<any> {
