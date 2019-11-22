@@ -9,14 +9,15 @@ import './controllers/userController';
 const PORT = 3000;
 const inversionOfControlContainer = new InversifyConfig();
 
-//
+// Synchronous bindings
 inversionOfControlContainer.bind();
 
 // XXX: 2019-11-22 Blockost Using an IIAFE (Immediately Invoked Async Function Expression) here because
-// await is only usable inside an async function.
+// `await` is only usable inside an `async` function.
 // The good news is top-level await should be coming soon: https://github.com/tc39/proposal-top-level-await
 (async () => {
   try {
+    // Asynchronous bindings
     await inversionOfControlContainer.bindAsync();
 
     // When asynchronous bindings are done, start the application with the finalized container
