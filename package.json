@@ -35,7 +35,7 @@
     "cors": "^2.8.5",
     "dotenv": "^7.0.0",
     "inversify": "^5.0.1",
-    "inversify-express-utils": "^6.3.2",
+    "inversify-express-utils": "^6.4.3",
     "morgan": "^1.9.1",
     "pg": "^7.14.0",
     "reflect-metadata": "^0.1.13",
